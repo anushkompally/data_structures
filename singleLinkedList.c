@@ -63,7 +63,7 @@ void deleteAtEnd(Node *head)
 {
 	while(head->next->next != NULL)
 		head=head->next;
-	head-next = NULL;
+	head->next = NULL;
 	free(head->next);
 }
 
@@ -77,17 +77,17 @@ int getCount(Node *head)
 }
 
 //This function return true if the integer is found in the linkedlist -- Iterative
-// bool search(Node *head, int num)
-// {
-// 	while(head->next != NULL)
-// 	{
-// 		if(head->data == num)
-// 			return true;
-// 		else
-// 			head = head->next;
-// 	}
-// 	return false;
-// }
+bool search_Iterative(Node *head, int num)
+{
+	while(head->next != NULL)
+	{
+		if(head->data == num)
+			return true;
+		else
+			head = head->next;
+	}
+	return false;
+}
 
 //This function return true if the integer is found in the linkedlist -- Recursive
 bool search(Node *head, int num)
@@ -100,30 +100,64 @@ bool search(Node *head, int num)
 		return search(head->next, num);
 }
 
+//This fucntion adds a number in an sorted LL
+Node* insert(Node* head, int num)
+{
+	if (head == NULL)
+		return NULL;
+
+	Node* node = (Node*) malloc (sizeof(Node));
+	node->data = num;
+
+	while(head->next != NULL && head->next->data < num)
+	{
+		head = head->next;
+	}
+
+	node->next = head->next;
+	head->next = node;
+	return head;
+}
+
+/********************************************************************/
+//Function to check if a Linkedlist is a palidrome - Using a STACK
+/********************************************************************/
+bool isPalindrome(Node* head)
+{
+	int len = getCount(head);
+	Node* tempHead = head;
+	Stack* IHOP = initStack(len);
+
+	while(tempHead->next != NULL)
+	{
+		tempHead = tempHead->next;
+		push(IHOP,tempHead->data);
+	}
+
+	int i = 0;
+	while(i!=(len+1)/2)
+	{
+		if(pop(IHOP) != head->next->data)
+			return false;
+		head= head->next;
+		i++;
+	}
+	return true;
+}
+
 
 int main(void) {
 	Node* node = (Node*) malloc (sizeof(Node));
-	addNodeAtEnd(node,3);
-	addNodeAtEnd(node,4);
-	addNodeAtEnd(node,4);
 	addNodeAtEnd(node,5);
-	printList(node);
-	printf("\n%d",getCount(node));
-
-	addNodeAtFront(node,10);
-	printf("\n");
-	printList(node);
-	printf("\n%d",getCount(node));
-
-	addNodeAtNth(node,15,2);
-	printf("\n");
-	printList(node);
-	printf("\n%d",getCount(node));
-
+	addNodeAtEnd(node,8);
+	addNodeAtEnd(node,10);
+	addNodeAtFront(node,3);
 	deleteAtEnd(node);
+	printList(node);
+
+	insert(node,4);
+	insert(node,6);
 	printf("\n");
 	printList(node);
-	if(search(node,4))
-		printf("\n%d",getCount(node));
 	return 0;
 }
