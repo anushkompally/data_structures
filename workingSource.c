@@ -3,16 +3,6 @@
 #include <stdbool.h>
 #include <limits.h>
 
-// A structure to represent a stack
-struct stack
-{
-    int top;
-    unsigned capacity;
-    int* array;
-};
-
-typedef struct stack Stack;
-
 struct node
 {
 	int data;
@@ -51,70 +41,48 @@ int getCount(Node *head)
 	else
 		return 1+getCount(head->next);
 }
-Stack* initStack(unsigned capacity)
-{
-  Stack* stack = (Stack*) malloc(sizeof(Stack));
-  stack->capacity = capacity;
-  stack->top = -1;
-  stack->array = (int*)malloc (stack->capacity*sizeof(int));
-  return stack;
-}
 
-bool isEmpty(Stack* stack)
-{
-  return stack->top == -1;
-}
 
-bool isFull(Stack *stack)
+bool compareLists(Node* head1, Node* head2)
 {
-  return stack->top + 1 == stack->capacity;
-}
+	Node* temp1 = head1;
+	Node* temp2 = head2;
 
-void push(Stack *stack, int num)
-{
-  if(isFull(stack))
-    return;
-  stack->array[++stack->top] = num;
-}
-
-int pop(Stack *stack)
-{
-  if(isEmpty(stack))
-    return INT_MIN;
-  return stack->array[stack->top--];
-}
-
-bool isPalindrome(Node* head)
-{
-	int len = getCount(head);
-	Node* tempHead = head;
-	Stack* IHOP = initStack(len);
-
-	while(tempHead->next != NULL)
+	while(temp1 && temp2)
 	{
-		tempHead = tempHead->next;
-		push(IHOP,tempHead->data);
-	}
-
-	int i = 0;
-	while(i!=(len+1)/2)
-	{
-		if(pop(IHOP) != head->next->data)
+		if(temp1->next->data == temp2->next->data)
+		{
+			temp1 = temp1->next;
+			temp2 = temp2->next;
+		}
+		else
 			return false;
-		head= head->next;
-		i++;
 	}
-	return true;
+	if(temp1 == NULL && temp2 == NULL)
+		return true;
+	return false;
 }
+
 
 int main(void) {
-	Node* node = (Node*) malloc (sizeof(Node));
-	addNodeAtEnd(node,5);
-	addNodeAtEnd(node,8);
-	addNodeAtEnd(node,5);
-  printList(node);
-  if(isPalindrome(node))
-    printf("The LinkedList is a Palindrome");
-	// printList(node);
+	Node* head1 = (Node*) malloc (sizeof(Node));
+	addNodeAtEnd(head1,5);
+	addNodeAtEnd(head1,8);
+	addNodeAtEnd(head1,5);
+  printList(head1);
+
+  Node* head2 = (Node*) malloc (sizeof(Node));
+	addNodeAtEnd(head2,5);
+	addNodeAtEnd(head2,8);
+	addNodeAtEnd(head2,5);
+  printf("\n");
+  printList(head2);
+
+  if(compareLists(head1,head2))
+  {
+    printf("\n");
+    printf("Lists are same");
+  }
+
 	return 0;
 }
