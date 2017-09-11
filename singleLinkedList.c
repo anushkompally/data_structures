@@ -119,10 +119,31 @@ Node* insert(Node* head, int num)
 	return head;
 }
 
+bool compareLists(Node* head1, Node* head2)
+{
+	Node* temp1 = head1;
+	Node* temp2 = head2;
+
+	while(temp1 && temp2)
+	{
+		if(temp1->data == temp2->data)
+		{
+			temp1 = temp1->next;
+			temp2 = temp2->next;
+		}
+		else
+			return false;
+	}
+	if(temp1 == NULL && temp2 == NULL)
+		return true;
+	return false;
+}
+
 /********************************************************************/
 //Function to check if a Linkedlist is a palidrome - Using a STACK
+// Time complexity of this method is O(n) but requires O(n) extra space
 /********************************************************************/
-bool isPalindrome(Node* head)
+bool isPalindrome_usingStack(Node* head)
 {
 	int len = getCount(head);
 	Node* tempHead = head;
@@ -145,6 +166,14 @@ bool isPalindrome(Node* head)
 	return true;
 }
 
+/********************************************************************/
+//Function to check if a Linkedlist is a palidrome - By reversing the string
+// Time complexity of this method is O(n)
+/********************************************************************/
+bool isPalindrome_Reversing(Node* head)
+{
+
+}
 
 int main(void) {
 	Node* node = (Node*) malloc (sizeof(Node));
