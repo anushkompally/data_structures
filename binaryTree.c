@@ -1,27 +1,6 @@
 /**********************************************************************/
 // Binary trees
 /**********************************************************************/
-
-struct node
-{
-  int data;
-  struct node* leftChild;
-  struct node* rightChild;
-};
-
-typedef struct node Node;
-
-Node* newNode(int data)
-{
-  Node* node = (Node*)malloc(sizeof(Node));
-  node->data = data;
-
-  node->leftChild = NULL;
-  node->rightChild = NULL;
-
-  return node;
-}
-
 /**********************************************************************/
 /*
 Depth First Traversals:
@@ -35,6 +14,7 @@ Breadth First or Level Order Traversal : 1 2 3 4 5
 // C program for different tree traversals
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 /* A binary tree node has data, pointer to left child
    and a pointer to right child */
@@ -45,12 +25,13 @@ struct node
      struct node* right;
 };
 
+typedef struct node Node;
+
 /* Helper function that allocates a new node with the
    given data and NULL left and right pointers. */
-struct node* newNode(int data)
+Node* newNode(int data)
 {
-     struct node* node = (struct node*)
-                                  malloc(sizeof(struct node));
+     struct node* node = (Node*)malloc(sizeof(Node));
      node->data = data;
      node->left = NULL;
      node->right = NULL;
@@ -60,7 +41,7 @@ struct node* newNode(int data)
 
 /* Given a binary tree, print its nodes according to the
   "bottom-up" postorder traversal. */
-void printPostorder(struct node* node)
+void printPostorder(Node* node)
 {
      if (node == NULL)
         return;
@@ -76,7 +57,7 @@ void printPostorder(struct node* node)
 }
 
 /* Given a binary tree, print its nodes in inorder*/
-void printInorder(struct node* node)
+void printInorder(Node* node)
 {
      if (node == NULL)
           return;
@@ -92,7 +73,7 @@ void printInorder(struct node* node)
 }
 
 /* Given a binary tree, print its nodes in preorder*/
-void printPreorder(struct node* node)
+void printPreorder(Node* node)
 {
      if (node == NULL)
           return;
@@ -107,24 +88,148 @@ void printPreorder(struct node* node)
      printPreorder(node->right);
 }
 
+/**********************************************************************/
+//Level order travesal - Breadth first search
+/**********************************************************************/
+int height(Node* node);
+void printGivenLevel(Node* root, int level);
+
+void printLevelOrder(Node* root)
+{
+  int h = height(root);
+  for(int i = 1; i<=h; i++)
+  {
+    printGivenLevel(root,i);
+    printf("\n");
+  }
+}
+
+int height(Node* root)
+{
+  if(root == NULL)
+    return 0;
+  int lheight = height(root->left);
+  int rheight = height(root->right);
+
+  if(lheight>rheight)
+    return lheight+1;
+  else
+    return rheight+1;
+}
+
+void printGivenLevel(Node* root, int level)
+{
+  if(root == NULL)
+    return;
+  if(level == 1)
+    printf("%d ",root->data);
+  else if(level > 1)
+  {
+    printGivenLevel(root->left,level-1);
+    printGivenLevel(root->right,level-1);
+  }
+}
+
+void printInOrderWORecursion(Node *root)
+{
+
+}
+
+int sizeOfTree(Node *root)
+{
+  if(root == NULL)
+    return 0;
+  else
+  {
+    return 1 + sizeOfTree(root->left) + sizeOfTree(root->right);
+  }
+}
+
+bool isTreeHeightBalanced(Node *root)
+{
+  int lh; /* for height of left subtree */
+  int rh; /* for height of right subtree */
+
+  /* If tree is empty then return true */
+  if(root == NULL)
+   return 1;
+
+  /* Get the height of left and right sub trees */
+  lh = height(root->left);
+  rh = height(root->right);
+
+  if( abs(lh-rh) <= 1 &&
+      isTreeHeightBalanced(root->left) &&
+      isTreeHeightBalanced(root->right))
+    return 1;
+
+  /* If we reach here then tree is not height-balanced */
+  return 0;
+}
+
+int getLeafCount(Node *root)
+{
+  if(root == NULL)
+    return 0;
+  if(root->left == NULL && root->right == NULL)
+    return 1;
+  else
+  {
+    return getLeafCount(root->left)+getLeafCount(root->right);
+  }
+}
+
+bool isSumProperty(Node *root)
+{
+  int left_data,right_data = 0;
+
+  if(root == NULL || (root->left == NULL && root->right == NULL))
+    return true;
+  else
+  {
+    if(root->right != NULL)
+      right_data = root->right->data;
+    if(root->left != NULL)
+      left_data = root->left->data;
+
+    if(root->data == left_data + right_data &&
+    isSumProperty(root->left) && isSumProperty(root->right))
+        return 1;
+    else
+      return 0;
+  }
+}
+
 /* Driver program to test above functions*/
 int main()
 {
-     struct node *root  = newNode(1);
+     Node *root  = newNode(1);
      root->left             = newNode(2);
      root->right           = newNode(3);
      root->left->left     = newNode(4);
      root->left->right   = newNode(5);
 
-     printf("\nPreorder traversal of binary tree is \n");
-     printPreorder(root);
+    //  printf("\nPreorder traversal of binary tree is \n");
+    //  printPreorder(root);
+     //
+    //  printf("\nInorder traversal of binary tree is \n");
+    //  printInorder(root);
+     //
+    //  printf("\nPostorder traversal of binary tree is \n");
+    //  printPostorder(root);
+     //
+    //  printf("\nLevelorder traversal of binary tree is \n");
+    //  printLevelOrder(root);
 
-     printf("\nInorder traversal of binary tree is \n");
-     printInorder(root);
+    //  printf("Size of tree is %d",sizeOfTree(root));
+    //  if(isTreeHeightBalanced(root))
+    //   printf("Tree is height balanced");
+    //  else
+    //  printf("Tree is not height balanced");
 
-     printf("\nPostorder traversal of binary tree is \n");
-     printPostorder(root);
-
+    printf("%d",getLeafCount(root));
+    if(isSumProperty(root))
+      printf("\tYEAH");
      getchar();
      return 0;
 }
