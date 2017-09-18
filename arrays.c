@@ -24,12 +24,7 @@ bool pairInSortedRotated(int arr[], int len, int sum);
 
 int minimumInSortedRotated(int arr[], int len);
 
-void swap(int *x, int *y)
-{
-  int temp = *x;
-  *x = *y;
-  *y = temp;
-}
+void swap(int *x, int *y);
 
 void sortInWave(int arr[],int len);
 
@@ -37,12 +32,138 @@ void rearrangePosNeg(int arr[], int len);
 
 void randomizeArray(int arr[], int len);
 
+void strToLower(char* str);
+
+void strToUpper(char* str);
+
+//CTCI
+bool isAnagram(char *str1,char *str2);
+
+//CTCI
+void reverseStr(char *str);
+
+//CTCI
+bool allUniqueChar(char *str);
+
 int main(void)
 {
   int arr[7] = {4,-1,-9,7,3,-8,1};
+  char str1[] = "tea";
+  char str2[] = "eat";
+  reverseStr(str1);
+  if(allUniqueChar(str2))
+    printf("Unique");
   randomizeArray(arr,7);
   printArray(arr,7);
   return 0;
+}
+
+void strToLower(char* str)
+{
+	while(*str != '\0')
+	{
+		if(*str>=65 && *str <= 90)
+		*str = *str+32;
+		str++;
+	}
+}
+
+void strToUpper(char* str)
+{
+	while(*str != '\0')
+	{
+		if(*str>=97 && *str <= 122)
+		*str = *str-32;
+		str++;
+	}
+}
+
+bool allUniqueChar(char *str)
+{
+  char count[26];
+  memset (count, 0, 26);
+  int index;
+
+  strToLower(str);
+  while(*str != '\0')
+  {
+    index =(unsigned int)(*str) % 26;
+    if(count[index] != 0)
+        return false;
+    count[index]++;
+    str++;
+  }
+
+  return true;
+}
+
+void reverseStr(char *str)
+{
+  char *str_begin = str;
+  char *str_end = str + strlen(str) - 1;
+
+  char temp;
+
+  while(str_begin < str_end)
+  {
+    temp = *str_begin;
+    *(str_begin++) = *str_end;
+    *(str_end--) = temp;
+  }
+  return;
+
+  //Wihtout using pointers
+  /*
+  int len = strlen(str);
+  int i =0;
+  char temp;
+
+  while(str[i] != '\0' && i < len-1)
+  {
+	temp = str[i];
+	str[i] = str[len-i-1];
+	str[len-i-1] = temp;
+	i++;
+  }
+  return;
+  */
+}
+
+bool isAnagram(char *str1,char *str2)
+{
+  int count[256];
+  int index = -1;
+
+  if(strlen(str1) != strlen(str2))
+    return false;
+  memset(count,0,256*sizeof(int));
+
+  while(str1[++index] != '\0')
+  {
+    ++count[(unsigned int)str1[index]];
+  }
+
+  index = -1;
+  while(str2[++index] != '\0')
+  {
+    --count[(unsigned int)str2[index]];
+  }
+
+  index = -1;
+  while(++index < 256)
+  {
+    if(count[index] != 0)
+      return false;
+  }
+
+  return true;
+}
+
+void swap(int *x, int *y)
+{
+  int temp = *x;
+  *x = *y;
+  *y = temp;
 }
 
 void randomizeArray(int arr[], int len)
