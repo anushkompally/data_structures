@@ -55,6 +55,15 @@ void printStack(Stack* stack)
   }
 }
 
+int min(Stack* stack)
+{
+  if(isEmpty(stack))
+    return INT_MIN;
+
+  int temp[stack->top+1];
+  int min =
+}
+
 int main()
 {
   Stack* IHOP = initStack(10);
