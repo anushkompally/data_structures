@@ -126,7 +126,7 @@ bool compareLists(Node* head1, Node* head2)
 
 	while(temp1 && temp2)
 	{
-		if(temp1->data == temp2->data)
+		if(temp1->data == temp2-->data)
 		{
 			temp1 = temp1->next;
 			temp2 = temp2->next;
@@ -175,6 +175,22 @@ bool isPalindrome_Reversing(Node* head)
 
 }
 
+void reverseList(Node *head)
+{
+	Node* prev = NULL;
+	Node* curr = head;
+	Node* next;
+
+	while(curr != NULL)
+	{
+		next = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = next;
+	}
+	head = prev;
+}
+
 int main(void) {
 	Node* node = (Node*) malloc (sizeof(Node));
 	addNodeAtEnd(node,5);
@@ -183,10 +199,7 @@ int main(void) {
 	addNodeAtFront(node,3);
 	deleteAtEnd(node);
 	printList(node);
-
-	insert(node,4);
-	insert(node,6);
-	printf("\n");
+	reverseList(node);
 	printList(node);
 	return 0;
 }
