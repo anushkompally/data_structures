@@ -9,57 +9,6 @@ struct node
 
 typedef struct node Node;
 
-void printList(Node* n);
-
-void addNodeAtEnd(Node *head, int data);
-
-void addNodeAtFront(Node *head,int data);
-
-void addNodeAtNth(Node *head,int data,int nth);
-
-void deleteAtEnd(Node *head);
-
-int getCount(Node *head);
-
-bool search_Iterative(Node *head, int num);
-
-bool search(Node *head, int num);
-
-Node* insert(Node* head, int num);
-
-bool compareLists(Node* head1, Node* head2);
-
-bool isPalindrome_usingStack(Node* head);
-
-bool isPalindrome_Reversing(Node* head);
-
-void deleteANode(Node* node);
-
-int main(void) {
-	Node* node = (Node*) malloc (sizeof(Node));
-	addNodeAtEnd(node,5);
-	addNodeAtEnd(node,8);
-	addNodeAtEnd(node,10);
-	addNodeAtFront(node,3);
-	deleteAtEnd(node);
-	printList(node);
-
-	insert(node,4);
-	insert(node,6);
-	printf("\n");
-	printList(node);
-	return 0;
-}
-//CTCI
-void deleteANode(Node* node)
-{
-	Node* temp = node->next;
-	node->data = temp->data;
-	node->next = temp->next;
-
-	free(temp);
-}
-
 void printList(Node* n)
 {
 	while (n != NULL)
@@ -177,7 +126,7 @@ bool compareLists(Node* head1, Node* head2)
 
 	while(temp1 && temp2)
 	{
-		if(temp1->data == temp2->data)
+		if(temp1->data == temp2-->data)
 		{
 			temp1 = temp1->next;
 			temp2 = temp2->next;
@@ -216,6 +165,7 @@ bool isPalindrome_usingStack(Node* head)
 	}
 	return true;
 }
+
 /********************************************************************/
 //Function to check if a Linkedlist is a palidrome - By reversing the string
 // Time complexity of this method is O(n)
@@ -223,4 +173,33 @@ bool isPalindrome_usingStack(Node* head)
 bool isPalindrome_Reversing(Node* head)
 {
 
+}
+
+void reverseList(Node *head)
+{
+	Node* prev = NULL;
+	Node* curr = head;
+	Node* next;
+
+	while(curr != NULL)
+	{
+		next = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = next;
+	}
+	head = prev;
+}
+
+int main(void) {
+	Node* node = (Node*) malloc (sizeof(Node));
+	addNodeAtEnd(node,5);
+	addNodeAtEnd(node,8);
+	addNodeAtEnd(node,10);
+	addNodeAtFront(node,3);
+	deleteAtEnd(node);
+	printList(node);
+	reverseList(node);
+	printList(node);
+	return 0;
 }

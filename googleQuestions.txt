@@ -1,0 +1,33 @@
+1.How to efficiently randomize a deck of cards.
+2.Detect cycle in directed graph.
+3.Reverse a linked list list
+4.Solve the game "Mastermind" as a computer playing against a human
+5.A string consists of ‘0’, ‘1’ and '?'. The question mark can be either '0' or '1'. Find all possible combinations for a string
+6.Topological sort for directed Graph
+7.Implement a random number generator
+8.Given a array find a continuous subarray which equals to a particular sum.
+9.Give a tree(not a BST or a binary tree) which has a value at each node find all continuous paths which sum to a target value.
+10.Given a sentence remove all tokens from it if the reverse of that token occurs previously in it .
+ex The cat and rat tac tar = the cat and rat
+11.Give you 6 balls and 6 holes with different coordinates, find the minimum distance in total you have to put balls in hole
+12.Rotate a matrix
+13.Check if one tree is a subtree of another.
+14.Design a connect 4 game
+15.Write Fibonacci's algorithm without recursion (using dynamic programming)
+16.Find n closest points to the origin
+17.Print a BST level by level - Intern
+18.Phone dial pad question (T9): given a number (i.e. 1423) return all the possible words this number can represent, according to the phone dial pad letter representation (e.g. 2 = abc, 3=def)
+19.Write a function to return a palindromic permutation of a string.
+20.Given an array of integers, return an array consisting of the product of N-1 elements
+21.Given matrix m x n containing only 0s and 1s. Write code that finds path of 1s from first row to last row.
+22.
+23.
+24.
+25.
+26.
+27.
+28.
+29.
+30.
+31.
+32.
