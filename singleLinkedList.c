@@ -9,6 +9,57 @@ struct node
 
 typedef struct node Node;
 
+void printList(Node* n);
+
+void addNodeAtEnd(Node *head, int data);
+
+void addNodeAtFront(Node *head,int data);
+
+void addNodeAtNth(Node *head,int data,int nth);
+
+void deleteAtEnd(Node *head);
+
+int getCount(Node *head);
+
+bool search_Iterative(Node *head, int num);
+
+bool search(Node *head, int num);
+
+Node* insert(Node* head, int num);
+
+bool compareLists(Node* head1, Node* head2);
+
+bool isPalindrome_usingStack(Node* head);
+
+bool isPalindrome_Reversing(Node* head);
+
+void deleteANode(Node* node);
+
+int main(void) {
+	Node* node = (Node*) malloc (sizeof(Node));
+	addNodeAtEnd(node,5);
+	addNodeAtEnd(node,8);
+	addNodeAtEnd(node,10);
+	addNodeAtFront(node,3);
+	deleteAtEnd(node);
+	printList(node);
+
+	insert(node,4);
+	insert(node,6);
+	printf("\n");
+	printList(node);
+	return 0;
+}
+//CTCI
+void deleteANode(Node* node)
+{
+	Node* temp = node->next;
+	node->data = temp->data;
+	node->next = temp->next;
+
+	free(temp);
+}
+
 void printList(Node* n)
 {
 	while (n != NULL)
@@ -165,7 +216,6 @@ bool isPalindrome_usingStack(Node* head)
 	}
 	return true;
 }
-
 /********************************************************************/
 //Function to check if a Linkedlist is a palidrome - By reversing the string
 // Time complexity of this method is O(n)
@@ -173,20 +223,4 @@ bool isPalindrome_usingStack(Node* head)
 bool isPalindrome_Reversing(Node* head)
 {
 
-}
-
-int main(void) {
-	Node* node = (Node*) malloc (sizeof(Node));
-	addNodeAtEnd(node,5);
-	addNodeAtEnd(node,8);
-	addNodeAtEnd(node,10);
-	addNodeAtFront(node,3);
-	deleteAtEnd(node);
-	printList(node);
-
-	insert(node,4);
-	insert(node,6);
-	printf("\n");
-	printList(node);
-	return 0;
 }
