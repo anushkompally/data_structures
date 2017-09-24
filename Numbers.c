@@ -63,3 +63,26 @@ bool isArmstrong(int num)
   }
   return (sum == num);
 }
+
+//Leetcode
+//Hamming distance
+int getSetBits(int num)
+{
+    int count = 0;
+    while(num)
+    {
+        num &=(num-1);
+        count++;
+    }
+    return count;
+}
+
+int hammingDistance(int x, int y) {
+    
+    int z = x^y;
+    return getSetBits(z);
+    
+}
+
+
+

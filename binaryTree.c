@@ -31,7 +31,7 @@ typedef struct node Node;
    given data and NULL left and right pointers. */
 Node* newNode(int data)
 {
-     struct node* node = (Node*)malloc(sizeof(Node));
+     Node* node = (Node*)malloc(sizeof(Node));
      node->data = data;
      node->left = NULL;
      node->right = NULL;

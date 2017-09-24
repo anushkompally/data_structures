@@ -3,86 +3,46 @@
 #include <stdbool.h>
 #include <limits.h>
 
-struct node
+void printArr(int arr[],int len)
 {
-	int data;
-	struct node *next;
-};
+	for(int i =0; i<len; i++)
+		printf("%d",arr[i]);
+}
 
-typedef struct node Node;
-
-void printList(Node* n)
+void swap(int *x,int *y)
 {
-	while (n != NULL)
+	int temp = *x;
+	*x = *y;
+	*y = temp;
+}
+
+void minheapify(int arr[],int len, int i)
+{
+	int smallest = i;
+	int l = 2*i+1;
+	int r = 2*i+2;
+
+	if(l<len && arr[l] < arr[smallest])
+		smallest = l;
+	if(r<len && arr[r] < arr[smallest])
+		smallest = r;
+
+	if(smallest != i)
 	{
-		printf("%d\t",n->data);
-		n = n->next;
+		swap(&arr[i],&arr[smallest]);
+		minheapify(arr,len,smallest);
 	}
 }
 
-//This function adds a node at the end of linkedlist
-void addNodeAtEnd(Node *head, int data)
+void heapsort(int arr[],int len)
 {
-	while(head->next != NULL)
-		{
-			head = head->next;
-		}
+	for(int i = (len/2)-1;i>=0;i--)
+		minheapify(arr,len,i);
 
-	head->next = (Node*) malloc (sizeof(Node));
-	head->next->next = NULL;
-	head->next->data = data;
-}
-
-//This function returns the number of nodes in a linkedlist
-int getCount(Node *head)
-{
-	if(head->next == NULL)
-		return 0;
-	else
-		return 1+getCount(head->next);
-}
-
-
-bool compareLists(Node* head1, Node* head2)
-{
-	Node* temp1 = head1;
-	Node* temp2 = head2;
-
-	while(temp1 && temp2)
+	for(i=len;i>=0; i--)
 	{
-		if(temp1->next->data == temp2->next->data)
-		{
-			temp1 = temp1->next;
-			temp2 = temp2->next;
-		}
-		else
-			return false;
+		swap(&arr[0],&arr[i]);
+		minheapify(arr,i,0);
 	}
-	if(temp1 == NULL && temp2 == NULL)
-		return true;
-	return false;
-}
 
-
-int main(void) {
-	Node* head1 = (Node*) malloc (sizeof(Node));
-	addNodeAtEnd(head1,5);
-	addNodeAtEnd(head1,8);
-	addNodeAtEnd(head1,5);
-  printList(head1);
-
-  Node* head2 = (Node*) malloc (sizeof(Node));
-	addNodeAtEnd(head2,5);
-	addNodeAtEnd(head2,8);
-	addNodeAtEnd(head2,5);
-  printf("\n");
-  printList(head2);
-
-  if(compareLists(head1,head2))
-  {
-    printf("\n");
-    printf("Lists are same");
-  }
-
-	return 0;
 }
